@@ -139,8 +139,9 @@
             .d-icon-bookmark {
               color: var(--primary);
             }
-            .d-icon-check-square {
-              color: var(--success);
+            .d-icon-check-square,
+            .d-icon-square-check {
+              color: var(--fkb-edu-solved, var(--success));
             } 
           }
         }

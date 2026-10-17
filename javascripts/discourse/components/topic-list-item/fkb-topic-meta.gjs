@@ -43,10 +43,14 @@ export default class FkbTopicMeta extends FkbTopicListSection {
 
       <a
         href={{this.topic.lastUnreadUrl}}
-        class="posts-map badge-posts"
+        class="posts-map badge-posts {{if this.topic.has_accepted_answer "has-accepted-answer"}}"
       >
         {{number this.topic.replyCount noTitle="true"}}
-        {{icon "far-comment"}}
+        {{#if this.topic.has_accepted_answer}}
+          {{icon "check"}}
+        {{else}}
+          {{icon "far-comment"}}
+        {{/if}}
       </a>
     </div>
   </template>

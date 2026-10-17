@@ -2,6 +2,14 @@ disable_topic_list_modification:
   type: bool
   default: false
   description: "Enable this setting to revert topic list to default Discourse version. It's useful if you want to use theme components like: Topic List Thumbnails..."
+education_mode:
+  type: bool
+  default: true
+  description: "Enable education enhancements: Question status badges (Solved, Needs Answer), homework image optimization, and math formula styling for Sorumatik."
+topic_image_adaptive_fit:
+  type: bool
+  default: true
+  description: "Adaptively scale question photos so portrait homework photos are not clipped."
 f_nav_enabled:
   type: bool
   default: false
@@ -102,7 +110,7 @@ fkb_panel_items:
         
 fkb_panel_show_solutions:
   type: bool
-  default: false
+  default: true
   description: "Enable if you use Discourse Solved plugin."
 fkb_panel_show_badges:
   type: bool

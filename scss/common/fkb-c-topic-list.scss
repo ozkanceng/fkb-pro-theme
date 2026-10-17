@@ -30,8 +30,15 @@
       display: block;
       padding: 8px 0;
       border: none;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 320px;
       &:first-child {
         padding-top: 0;
+      }
+      &:hover {
+        .main-link {
+          box-shadow: var(--fkb-card-shadow-hover);
+        }
       }
       &.highlighted {
         animation: none;
@@ -76,19 +83,71 @@
         display: flex;
         flex-direction: column;
         
+        &__meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5em;
+          margin-bottom: 0.25em;
+          min-width: 0;
+        }
+
         &__category {
           display: flex;
-          justify-content: right;
+          align-items: center;
           .badge-category__wrapper {
-            margin: 0 0.5em -1em auto;
+            margin: 0;
             font-size: var(--font-down-2);
-            font-weight: normal;
+            font-weight: 500;
             @if $category-badge-style == "box" {
-              margin: -1.25em 0.5em -1em auto;
               .badge-category {
-                border-radius: 0 0 calc(var(--d-default-border-radius) * 0.75) calc(var(--d-default-border-radius) * 0.75);
+                border-radius: calc(var(--d-default-border-radius) * 0.5);
               }
             }
+          }
+        }
+
+        &__status {
+          display: flex;
+          align-items: center;
+          margin-left: auto;
+        }
+
+        .fkb-edu-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35em;
+          padding: 0.2em 0.6em;
+          border-radius: 9999px;
+          font-size: var(--font-down-2);
+          font-weight: 600;
+          line-height: 1.25;
+          white-space: nowrap;
+          user-select: none;
+          flex-shrink: 0;
+          transition: transform 0.15s ease;
+
+          .d-icon {
+            width: 0.85em;
+            height: 0.85em;
+          }
+
+          &--solved {
+            background: var(--fkb-edu-solved-bg);
+            color: var(--fkb-edu-solved);
+            border: 1px solid var(--fkb-edu-solved-border);
+          }
+
+          &--unanswered {
+            background: var(--fkb-edu-waiting-bg);
+            color: var(--fkb-edu-waiting);
+            border: 1px solid var(--fkb-edu-waiting-border);
+          }
+
+          &--answered {
+            background: var(--fkb-edu-answered-bg);
+            color: var(--fkb-edu-answered);
+            border: 1px solid var(--fkb-edu-answered-border);
           }
         }
         
@@ -200,8 +259,9 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;          
-            filter: blur(#{$topic_image_backdrop_blur}) brightness(#{$topic_image_backdrop_brightness});
-            transform: scale(2);
+            filter: blur(24px) brightness(#{$topic_image_backdrop_brightness});
+            transform: scale(1.08);
+            will-change: transform;
           }
           &__img {
             position: relative;
@@ -218,6 +278,34 @@
             }
             @if ($topic_image_fit == cover) {
               object-fit: cover;
+            }
+          }
+
+          // Adaptive Question Photo Fit (Education Mode)
+          &--adaptive {
+            height: auto !important;
+            max-height: 440px;
+            width: 100%;
+            margin: 0.5em 0;
+            background: rgba(var(--primary-rgb), 0.03);
+            border-radius: calc(var(--d-default-border-radius) * 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(var(--primary-rgb), 0.05);
+
+            .topic-image__img {
+              width: auto;
+              max-width: 100%;
+              height: auto;
+              max-height: 440px;
+              object-fit: contain !important;
+              border-radius: calc(var(--d-default-border-radius) * 0.75);
+              transition: transform 0.25s ease;
+            }
+
+            .topic-image__backdrop {
+              display: none;
             }
           }
         }
@@ -308,6 +396,13 @@
           time {
             font: inherit;
             color: inherit;
+          }
+        }
+        .posts-map.badge-posts.has-accepted-answer {
+          color: var(--fkb-edu-solved);
+          font-weight: 600;
+          .d-icon {
+            color: var(--fkb-edu-solved);
           }
         }
       }

@@ -56,14 +56,18 @@ body[class*="category-"]:not(.archetype-regular):not(.archetype-banner) {
         margin: var(--nav-space);        
         #create-topic {
           color: var(--secondary);
-          border: 2px solid var(--tertiary);
-          background: var(--tertiary);
+          border: none;
+          background: linear-gradient(135deg, var(--tertiary), #2563eb);
           border-radius: var(--d-button-border-radius);
-          transition: background 0.25s ease-out;
+          padding: 0.65em 1.25em;
+          font-weight: 600;
+          box-shadow: 0 2px 6px rgba(20, 126, 251, 0.25);
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
           &:hover,
           &:focus {
-            background: var(--tertiary-hover);
-            border: 2px solid var(--tertiary-hover);
+            background: linear-gradient(135deg, var(--tertiary-hover), #1d4ed8);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(20, 126, 251, 0.35);
           }
           .d-icon {
             color: var(--secondary);

@@ -252,45 +252,117 @@ blockquote {
 
 // Solved Quote
 
+// Solved Quote & Accepted Answer Card
+
 aside.quote.accepted-answer {
+  border-radius: var(--d-default-border-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  margin: 1em 0;
+
   > .title {
-    padding: 12px;
-    background: green;
-    border: 3px solid green;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: 1px solid #10b981;
     color: #fff;
     border-bottom: 0;
-    .fa.accepted {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    .fa.accepted,
+    .d-icon {
       color: #fff;
     }
     span.by {
       a {
         color: #fff;
         text-decoration: underline;
+        font-weight: bold;
       }
     }
     a {
       color: #fff;
-      text-decoration: underline;
     }
     .quote-controls .d-icon {
       color: #fff;
+      opacity: 0.9;
     }
   }
   > blockquote {
-    border: 3px solid green;
+    background: var(--fkb-solution-bg);
+    border: 1.5px solid var(--fkb-solution-border);
+    border-top: none;
+    padding: 1em;
+    border-radius: 0 0 var(--d-default-border-radius) var(--d-default-border-radius);
   }
 }
 
-// Solved
+// Post in Topic Stream that is Accepted Answer
+.topic-post.accepted-answer {
+  .topic-body {
+    border-left: 3px solid var(--fkb-edu-solved);
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.05), transparent 40%);
+    border-radius: 0 var(--d-default-border-radius) var(--d-default-border-radius) 0;
+  }
+}
 
+// Solved button / accepted text
 .post-controls .extra-buttons .accepted-text {
-  color: var(--primary-high);
+  color: var(--fkb-edu-solved);
+  background: var(--fkb-edu-solved-bg);
+  border: 1px solid var(--fkb-edu-solved-border);
   border-radius: var(--d-button-border-radius);
   margin-left: 3px;
   margin-right: 0.25em;
-  padding: 9px 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  .d-icon {
+    color: var(--fkb-edu-solved);
+  }
   span {
-    padding: 7px 1px;
+    padding: 0;
+  }
+}
+
+// Math & KaTeX Formula Optimizations for Education
+.cooked,
+.d-editor-preview {
+  .math,
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.6em 0.8em;
+    margin: 0.8em 0;
+    border-radius: calc(var(--d-default-border-radius) * 0.5);
+    background: rgba(var(--primary-rgb), 0.03);
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    @include custom-scrollbar;
+
+    .katex {
+      font-size: 1.05em;
+      line-height: 1.35;
+      text-rendering: optimizeLegibility;
+    }
+  }
+
+  .katex-html {
+    white-space: nowrap;
+  }
+
+  // Question Images in Posts (Homework photos)
+  p > img:not(.avatar):not(.emoji),
+  .lightbox-wrapper {
+    border-radius: calc(var(--d-default-border-radius) * 0.75);
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(var(--primary-rgb), 0.08);
   }
 }
 

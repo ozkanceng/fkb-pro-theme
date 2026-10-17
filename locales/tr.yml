@@ -1,0 +1,14 @@
+tr:
+  sidebar: 
+    welcome: "Hoş Geldiniz"
+    all_badges: "tüm rozetler"
+    show_panel: "Paneli Göster"
+    hide_panel: "Paneli Gizle"
+  created_at: "Soruldu:"
+  education:
+    solved: "Çözüldü"
+    waiting_answer: "Cevap Bekliyor"
+    answered: "Cevaplandı"
+    ask_question: "Soru Sor"
+    accepted_solution: "Kabul Edilen Çözüm"
+    photo_question: "Fotoğrafla Soru Sor"

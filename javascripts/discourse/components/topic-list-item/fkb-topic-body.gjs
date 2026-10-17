@@ -10,6 +10,10 @@ export default class FkbTopicBody extends FkbTopicListSection {
     return htmlSafe(`background-image: url(${this.topic.image_url})`);
   }
 
+  get isAdaptiveFit() {
+    return Boolean(settings.topic_image_adaptive_fit);
+  }
+
   <template>
     <div class="tli-middle-section">
       {{#if this.topic.hasExcerpt}}
@@ -24,8 +28,8 @@ export default class FkbTopicBody extends FkbTopicListSection {
       {{/if}}
 
       {{#if this.topic.image_url}}
-        <a href={{this.topic.lastUnreadUrl}}>
-          <div class="topic-image">
+        <a href={{this.topic.url}} class="topic-image-link">
+          <div class="topic-image {{if this.isAdaptiveFit "topic-image--adaptive"}} {{if settings.topic_image_backdrop "topic-image--has-backdrop"}}">
             {{#if settings.topic_image_backdrop}}
               <div
                 class="topic-image__backdrop"
@@ -37,7 +41,7 @@ export default class FkbTopicBody extends FkbTopicListSection {
               class="topic-image__img"
               loading="lazy"
               decoding="async"
-              fetchpriority="low"
+              fetchpriority="auto"
               alt={{this.topic.fancyTitle}}
             >
           </div>

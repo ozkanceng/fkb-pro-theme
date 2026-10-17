@@ -5,3 +5,10 @@ en:
     show_panel: "Show panel"
     hide_panel: "Hide panel"
   created_at: "Created"
+  education:
+    solved: "Solved"
+    waiting_answer: "Needs Answer"
+    answered: "Answered"
+    ask_question: "Ask Question"
+    accepted_solution: "Accepted Solution"
+    photo_question: "Ask with Photo"
