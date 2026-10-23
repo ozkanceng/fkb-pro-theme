@@ -21,13 +21,96 @@
     article {
       border: none;
       padding: 8px 0;
-      &#post_1 {
-        padding-top: 0;
-      }
+
       .topic-body {
-        padding: 1em;
+        padding: 0.9em 1em;
+        border-radius: 16px;
+        border: 1px solid rgba(var(--primary-rgb), 0.07);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         @include bg-br;
       }
+
+      // Educational Question Card (Post #1)
+      &#post_1 {
+        padding-top: 0;
+
+        .topic-body {
+          border: 1.5px solid rgba(var(--tertiary-rgb), 0.25);
+          border-radius: 18px;
+          background: var(--secondary);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+          position: relative;
+
+          &::before {
+            content: "❓ Soru";
+            display: inline-flex;
+            align-items: center;
+            font-size: var(--font-down-2);
+            font-weight: 700;
+            color: var(--tertiary);
+            background: rgba(var(--tertiary-rgb), 0.08);
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 0.6em;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+          }
+        }
+
+        .cooked {
+          font-size: 16px;
+          line-height: 1.65;
+          letter-spacing: -0.01em;
+          color: var(--primary);
+
+          p {
+            margin-bottom: 0.85em;
+          }
+
+          img:not(.avatar):not(.emoji) {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(var(--primary-rgb), 0.06);
+            margin: 0.5em 0;
+            display: block;
+          }
+        }
+      }
+
+      // Verified Solution Card (Accepted Answer)
+      &.accepted-answer {
+        .topic-body {
+          border: 2px solid #10b981;
+          border-radius: 18px;
+          background: rgba(16, 185, 129, 0.04);
+          box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+          position: relative;
+
+          &::before {
+            content: "✓ Doğrulanmış Çözüm";
+            display: inline-flex;
+            align-items: center;
+            font-size: var(--font-down-2);
+            font-weight: 700;
+            color: #059669;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 0.6em;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+          }
+        }
+
+        .cooked {
+          font-size: 16px;
+          line-height: 1.65;
+          color: var(--primary);
+        }
+      }
+
       .cooked .lightbox img {
         width: 100%;
       }

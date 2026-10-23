@@ -355,15 +355,32 @@ aside.quote.accepted-answer {
     white-space: nowrap;
   }
 
-  // Question Images in Posts (Homework photos)
+  // Question Images in Posts (Homework photos) with CLS prevention
   p > img:not(.avatar):not(.emoji),
   .lightbox-wrapper {
-    border-radius: calc(var(--d-default-border-radius) * 0.75);
+    border-radius: 12px;
     max-width: 100%;
     height: auto;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     border: 1px solid rgba(var(--primary-rgb), 0.08);
+    content-visibility: auto;
+    contain-intrinsic-size: 0 280px;
+    aspect-ratio: auto;
   }
+}
+
+// In-topic AdSense CLS & layout stability
+.google-adsense,
+.adsbygoogle,
+.discourse-adplugin-post-bottom,
+.discourse-adplugin-topic-above-suggested {
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  contain: layout paint;
+  margin: 0.5em 0;
 }
 
 // No answer popup

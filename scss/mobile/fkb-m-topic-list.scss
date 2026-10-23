@@ -20,33 +20,27 @@ body[class*="category-"]:not(.archetype-regular):not(.archetype-banner) {
         display: flex !important;
         margin-bottom: 0;
       }
-      // Navigation Bar 
+      // Navigation Bar - Clean bottom area: removed from bottom left
       #navigation-bar {
-        position: fixed;
-        bottom: 1.5em;
-        left: 0.75em;
-        margin-bottom: env(safe-area-inset-bottom); 
-        z-index: z("dropdown");
-        .list-control-toggle-link-trigger {
-          padding: 0.5em 0.65em;
-          color: var(--primary-high);
-          background: var(--secondary);
-          box-shadow: 0 0 0 1px var(--primary-high), var(--shadow-card);
-          border-radius: var(--d-button-border-radius);
-        }
-        html.footer-nav-visible:not(.footer-nav-ipad) & {
-          bottom: calc(var(--footer-nav-height) + 1.5em);
-          transition: bottom linear 0.1s;
-        }
+        display: none !important;
       }
-      // Navigation Controls
+      .list-control-toggle-link-trigger,
+      .floating-filter,
+      .sidebar-toggle,
+      .dismiss-container-top,
+      .dismiss-container-bottom,
+      .floating-dismiss-container {
+        display: none !important;
+      }
+
+      // Navigation Controls: Only Soru Sor (+) on the bottom right
       .navigation-controls {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
         position: fixed;
-        bottom: 1em;
-        right: 1em;
+        bottom: 1.25em;
+        right: 1.25em;
         gap: 0.5em;
         margin-bottom: env(safe-area-inset-bottom);
         transition: right 0.25s ease-in;
@@ -54,25 +48,8 @@ body[class*="category-"]:not(.archetype-regular):not(.archetype-banner) {
         > *:not(:last-child) {
           margin-right: 0;
         }
-        .btn {
-          transition: background 0.25s;
-        }
         .btn:not(#create-topic) {
-          padding: 0.75em 0.817em;
-          border-radius: var(--d-button-border-radius);
-          background: var(--primary-low);
-          order: 1;
-          &:hover,
-          &:focus {
-            background: var(--primary-medium);
-            .d-icon {
-              color: var(--primary-low);
-            }
-          }
-          
-          .d-icon {
-            color: var(--primary-high);
-          }
+          display: none !important;
         }
         #create-topic {
           order: 2;

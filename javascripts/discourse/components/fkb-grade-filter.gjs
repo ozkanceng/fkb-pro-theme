@@ -9,7 +9,10 @@ export default class FkbGradeFilter extends Component {
 
   get filterPills() {
     return [
-      { labelKey: "fkb_filter.all", url: "/latest", icon: "layer-group" },
+      { labelKey: "fkb_filter.latest", url: "/latest", icon: "fire" },
+      { labelKey: "fkb_filter.unsolved", url: "/filter?solved=no", icon: "clock" },
+      { labelKey: "fkb_filter.solved", url: "/filter?solved=yes", icon: "check" },
+      { labelKey: "fkb_filter.top", url: "/top", icon: "star" },
       { labelKey: "fkb_filter.tyt_yks", url: "/tag/tyt", icon: "graduation-cap" },
       { labelKey: "fkb_filter.lgs", url: "/tag/lgs", icon: "book-open" },
       { labelKey: "fkb_filter.grade_9", url: "/tag/9-sinif" },

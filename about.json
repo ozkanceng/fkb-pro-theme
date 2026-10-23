@@ -46,7 +46,11 @@
     "flask",
     "dna",
     "book-open",
-    "layer-group"
+    "layer-group",
+    "fire",
+    "star",
+    "clock",
+    "check"
   ],
   "modifiers": {
     "serialize_topic_excerpts": true

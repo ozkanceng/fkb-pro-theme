@@ -18,6 +18,10 @@ tr_TR:
     power: "Üslü Sayı (x²)"
   fkb_filter:
     all: "Tümü"
+    latest: "🔥 En Son"
+    unsolved: "⏳ Cevap Bekleyenler"
+    solved: "✓ Çözülenler"
+    top: "🌟 Popüler"
     tyt_yks: "TYT - YKS"
     lgs: "LGS"
     grade_9: "9. Sınıf"
