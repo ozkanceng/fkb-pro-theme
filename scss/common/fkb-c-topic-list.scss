@@ -51,9 +51,13 @@
       padding: 8px 0;
       border: none;
       content-visibility: auto;
-      contain-intrinsic-size: 0 320px;
+      contain-intrinsic-size: auto 320px;
       &:first-child {
         padding-top: 0;
+      }
+      &:nth-child(-n + 3) {
+        content-visibility: visible;
+        contain-intrinsic-size: none;
       }
       &:hover {
         .main-link {
@@ -100,7 +104,7 @@
       border: 1px solid rgba(var(--primary-rgb), 0.08);
       border-radius: 16px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease;
       @include bg-br;
       
       .tli-top-section {
@@ -582,7 +586,7 @@
     white-space: nowrap;
     text-decoration: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
 
     .d-icon {

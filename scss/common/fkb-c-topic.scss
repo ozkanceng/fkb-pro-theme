@@ -386,9 +386,15 @@ aside.quote.accepted-answer {
     height: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     border: 1px solid rgba(var(--primary-rgb), 0.08);
-    content-visibility: auto;
-    contain-intrinsic-size: 0 280px;
     aspect-ratio: auto;
+  }
+}
+
+article:not(#post_1) .cooked {
+  p > img:not(.avatar):not(.emoji),
+  .lightbox-wrapper {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 280px;
   }
 }
 
@@ -582,7 +588,7 @@ blockquote aside.onebox {
     button[data-format="fkb-math-sqrt"],
     button[data-format="fkb-math-power"] {
       color: var(--tertiary);
-      transition: all 0.15s ease;
+      transition: transform 0.15s ease;
       &:hover {
         background: rgba(var(--tertiary-rgb), 0.12);
         color: var(--tertiary-hover);
