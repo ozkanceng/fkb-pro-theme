@@ -67,8 +67,8 @@
       &.highlighted {
         animation: none;
         .main-link {
-          @media (prefers-reduced-motion: no-preference) {
-            animation: background-fade-topiclight 2.5s ease-out;
+          @media screen and (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+            animation: background-fade-topiclight 1.5s ease-out;
           }
         }
       }

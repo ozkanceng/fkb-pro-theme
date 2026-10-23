@@ -51,6 +51,8 @@ export default class FkbTopicBody extends FkbTopicListSection {
             <img
               src={{this.topic.image_url}}
               class="topic-image__img"
+              width="400"
+              height="225"
               loading={{this.imageLoading}}
               decoding="async"
               fetchpriority={{this.imageFetchPriority}}
