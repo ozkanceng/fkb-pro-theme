@@ -8,29 +8,34 @@
   margin: 1.25rem 0;
   flex: 0 0 auto;
   clear: both;
+  // Isolate ad layout reflows so internal ad mutations do not trigger page-wide recalculation
+  contain: layout;
 
-  // Header / Top of feed / Above post stream banner reservation
+  // Header / Top of feed / Above post stream banner reservation (CLS = 0)
   &.above-main-container,
   &.adsense-above-site-header,
   &.topic-list-top,
   &.adsense-topic-list-top,
   &.topic-above-post-stream,
   &.adsense-topic-above-post-stream {
-    min-height: 90px;
-    @media screen and (max-width: 767px) {
-      min-height: 100px;
+    min-height: 100px;
+    @media screen and (min-width: 768px) {
+      min-height: 90px;
     }
   }
 
-  // In-feed or post stream bottom ads reservation
-  &.between-topics,
+  // In-feed or post stream bottom ads reservation (CLS = 0, matching BlenderArtists 280px standard)
+  &.between-topics {
+    min-height: 250px;
+  }
+
   &.topic-list-bottom,
   &.adsense-topic-list-bottom,
   &.post-bottom,
   &.adsense-post-bottom,
   &.topic-above-suggested,
   &.adsense-topic-above-suggested {
-    min-height: 200px;
+    min-height: 280px;
   }
 
   .google-adsense-label {

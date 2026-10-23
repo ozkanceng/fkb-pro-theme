@@ -1,5 +1,12 @@
 // FKBC - Topic
 
+// Performance & CWV: Off-screen replies skip layout and style computation until scrolled near.
+// Post #1 (question, post metadata, LCP image, top ads) is never skipped and remains eagerly rendered.
+.topic-post:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 350px;
+}
+
 // Accepted Answer / Verified Solution Highlighting
 .topic-post.accepted-answer .topic-body {
   background: rgba(16, 185, 129, 0.05) !important;
