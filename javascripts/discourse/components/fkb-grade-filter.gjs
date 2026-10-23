@@ -1,7 +1,6 @@
 import Component from "@glimmer/component";
 import icon from "discourse/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
-import { themePrefix } from "discourse-common/lib/theme-prefix";
 
 export default class FkbGradeFilter extends Component {
   get showFilter() {
@@ -10,17 +9,17 @@ export default class FkbGradeFilter extends Component {
 
   get filterPills() {
     return [
-      { name: i18n(themePrefix("fkb_filter.all")), url: "/latest", icon: "layer-group" },
-      { name: i18n(themePrefix("fkb_filter.tyt_yks")), url: "/tag/tyt", icon: "graduation-cap" },
-      { name: i18n(themePrefix("fkb_filter.lgs")), url: "/tag/lgs", icon: "book-open" },
-      { name: i18n(themePrefix("fkb_filter.grade_9")), url: "/tag/9-sinif" },
-      { name: i18n(themePrefix("fkb_filter.grade_10")), url: "/tag/10-sinif" },
-      { name: i18n(themePrefix("fkb_filter.grade_11")), url: "/tag/11-sinif" },
-      { name: i18n(themePrefix("fkb_filter.grade_12")), url: "/tag/12-sinif" },
-      { name: i18n(themePrefix("fkb_filter.math")), url: "/c/ders-notlari/10", icon: "calculator" },
-      { name: i18n(themePrefix("fkb_filter.physics")), url: "/tag/fizik", icon: "atom" },
-      { name: i18n(themePrefix("fkb_filter.chemistry")), url: "/tag/kimya", icon: "flask" },
-      { name: i18n(themePrefix("fkb_filter.biology")), url: "/tag/biyoloji", icon: "dna" },
+      { labelKey: "fkb_filter.all", url: "/latest", icon: "layer-group" },
+      { labelKey: "fkb_filter.tyt_yks", url: "/tag/tyt", icon: "graduation-cap" },
+      { labelKey: "fkb_filter.lgs", url: "/tag/lgs", icon: "book-open" },
+      { labelKey: "fkb_filter.grade_9", url: "/tag/9-sinif" },
+      { labelKey: "fkb_filter.grade_10", url: "/tag/10-sinif" },
+      { labelKey: "fkb_filter.grade_11", url: "/tag/11-sinif" },
+      { labelKey: "fkb_filter.grade_12", url: "/tag/12-sinif" },
+      { labelKey: "fkb_filter.math", url: "/c/ders-notlari/10", icon: "calculator" },
+      { labelKey: "fkb_filter.physics", url: "/tag/fizik", icon: "atom" },
+      { labelKey: "fkb_filter.chemistry", url: "/tag/kimya", icon: "flask" },
+      { labelKey: "fkb_filter.biology", url: "/tag/biyoloji", icon: "dna" },
     ];
   }
 
@@ -33,7 +32,7 @@ export default class FkbGradeFilter extends Component {
               {{#if pill.icon}}
                 {{icon pill.icon}}
               {{/if}}
-              <span class="fkb-grade-pill__label">{{pill.name}}</span>
+              <span class="fkb-grade-pill__label">{{i18n (themePrefix pill.labelKey)}}</span>
             </a>
           {{/each}}
         </div>
