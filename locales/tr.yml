@@ -1,4 +1,4 @@
-tr:
+tr_TR:
   sidebar: 
     welcome: "Hoş Geldiniz"
     all_badges: "tüm rozetler"
@@ -12,3 +12,19 @@ tr:
     ask_question: "Soru Sor"
     accepted_solution: "Kabul Edilen Çözüm"
     photo_question: "Fotoğrafla Soru Sor"
+  fkb_math:
+    fraction: "Kesir Formülü (\\frac{a}{b})"
+    sqrt: "Karekök Formülü (\\sqrt{x})"
+    power: "Üslü Sayı (x²)"
+  fkb_filter:
+    all: "Tümü"
+    tyt_yks: "TYT - YKS"
+    lgs: "LGS"
+    grade_9: "9. Sınıf"
+    grade_10: "10. Sınıf"
+    grade_11: "11. Sınıf"
+    grade_12: "12. Sınıf"
+    math: "Matematik"
+    physics: "Fizik"
+    chemistry: "Kimya"
+    biology: "Biyoloji"

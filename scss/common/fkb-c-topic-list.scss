@@ -503,3 +503,61 @@
     }
   }
 }
+
+// Education Grade & Subject Horizontal Filter Bar
+.fkb-grade-filter-bar {
+  margin: 0.5em 0 1em 0;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+
+  .fkb-grade-filter-scroll {
+    display: flex;
+    gap: 0.5em;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 3px 2px 8px 2px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .fkb-grade-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.45em 0.9em;
+    background: var(--secondary);
+    border: 1px solid rgba(var(--primary-rgb), 0.1);
+    border-radius: 9999px;
+    font-size: var(--font-down-1);
+    font-weight: 500;
+    color: var(--primary-high);
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+
+    .d-icon {
+      width: 0.95em;
+      height: 0.95em;
+      color: var(--tertiary);
+    }
+
+    &:hover {
+      background: rgba(var(--tertiary-rgb), 0.08);
+      border-color: var(--tertiary);
+      color: var(--tertiary);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(var(--tertiary-rgb), 0.2);
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+}
+

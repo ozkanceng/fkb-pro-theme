@@ -546,3 +546,21 @@ blockquote aside.onebox {
     }
   }
 }
+
+// Composer Math Toolbar Buttons
+.d-editor {
+  .d-editor-button-bar {
+    button[data-format="fkb-math-fraction"],
+    button[data-format="fkb-math-sqrt"],
+    button[data-format="fkb-math-power"] {
+      color: var(--tertiary);
+      transition: all 0.15s ease;
+      &:hover {
+        background: rgba(var(--tertiary-rgb), 0.12);
+        color: var(--tertiary-hover);
+        transform: scale(1.08);
+      }
+    }
+  }
+}
+

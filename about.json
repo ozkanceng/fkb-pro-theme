@@ -35,6 +35,19 @@
       "love": "fa6c8d"
     }
   },
+  "svg_icons": [
+    "divide",
+    "square-root-variable",
+    "superscript",
+    "camera",
+    "graduation-cap",
+    "calculator",
+    "atom",
+    "flask",
+    "dna",
+    "book-open",
+    "layer-group"
+  ],
   "modifiers": {
     "serialize_topic_excerpts": true
   },

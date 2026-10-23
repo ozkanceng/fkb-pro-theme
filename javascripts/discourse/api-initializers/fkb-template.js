@@ -2,6 +2,7 @@ import { apiInitializer } from "discourse/lib/api";
 import FkbTopicHeader from "../components/topic-list-item/fkb-topic-header";
 import FkbTopicBody from "../components/topic-list-item/fkb-topic-body";
 import FkbPanel from "../components/fkb-panel";
+import FkbGradeFilter from "../components/fkb-grade-filter";
 
 export default apiInitializer("1.8.0", (api) => {
   
@@ -21,6 +22,7 @@ export default apiInitializer("1.8.0", (api) => {
   });
 
   if (!settings.disable_topic_list_modification) {
+    api.renderInOutlet("discovery-list-controls-after", FkbGradeFilter);
     api.renderInOutlet("topic-list-before-link", FkbTopicHeader);
     api.renderInOutlet("topic-list-main-link-bottom", FkbTopicBody);
   }
