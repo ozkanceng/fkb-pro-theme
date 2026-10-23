@@ -1,30 +1,56 @@
-// Only the advertising plugin's manual slots. Google owns auto-ad/iframe sizing.
+// Only Discourse Ad Plugin's manual slots. Google Auto Ads (anchors, vignettes, rails) remain untouched.
 .google-adsense[class*="adsense-"] {
   box-sizing: border-box;
   display: block;
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  margin: 1.5rem 0;
+  margin: 1.25rem 0;
   flex: 0 0 auto;
+  clear: both;
+
+  // Header / Top of feed / Above post stream banner reservation
+  &.above-main-container,
+  &.adsense-above-site-header,
+  &.topic-list-top,
+  &.adsense-topic-list-top,
+  &.topic-above-post-stream,
+  &.adsense-topic-above-post-stream {
+    min-height: 90px;
+    @media screen and (max-width: 767px) {
+      min-height: 100px;
+    }
+  }
+
+  // In-feed or post stream bottom ads reservation
+  &.between-topics,
+  &.topic-list-bottom,
+  &.adsense-topic-list-bottom,
+  &.post-bottom,
+  &.adsense-post-bottom,
+  &.topic-above-suggested,
+  &.adsense-topic-above-suggested {
+    min-height: 250px;
+  }
 
   .google-adsense-label {
     text-align: center;
     color: var(--primary-medium);
     font-size: var(--font-down-3);
-    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
   }
 
   .google-adsense-content {
-    display: block;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-width: 0;
     max-width: 100%;
     margin-inline: auto;
-  }
-
-  &.adsense-responsive .google-adsense-content {
-    width: 100%;
-    min-height: 280px;
+    text-align: center;
   }
 
   // Collapse gracefully if Google reports no fill
