@@ -3,7 +3,7 @@ import i18n from "discourse-common/helpers/i18n";
 
 export default class FkbGradeFilter extends Component {
   get showFilter() {
-    return settings.education_mode && settings.enable_education_category_pills;
+    return false;
   }
 
   get filterPills() {

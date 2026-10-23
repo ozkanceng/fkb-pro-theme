@@ -12,7 +12,7 @@ enable_math_quick_bar:
   description: "Enable one-click math & science LaTeX formula buttons (fraction, square root, power) in composer for students."
 enable_education_category_pills:
   type: bool
-  default: true
+  default: false
   description: "Display a horizontal scrollable grade level and subject filter bar (TYT, YKS, LGS, 9-12 Grade, Math, Physics) above topic list."
 topic_image_adaptive_fit:
   type: bool
