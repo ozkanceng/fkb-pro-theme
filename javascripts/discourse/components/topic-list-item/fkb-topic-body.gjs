@@ -14,6 +14,18 @@ export default class FkbTopicBody extends FkbTopicListSection {
     return Boolean(settings.topic_image_adaptive_fit);
   }
 
+  get isFirstTopic() {
+    return this.args?.outletArgs?.index === 0;
+  }
+
+  get imageLoading() {
+    return this.isFirstTopic ? "eager" : "lazy";
+  }
+
+  get imageFetchPriority() {
+    return this.isFirstTopic ? "high" : "low";
+  }
+
   <template>
     <div class="tli-middle-section">
       {{#if this.topic.hasExcerpt}}
@@ -39,9 +51,9 @@ export default class FkbTopicBody extends FkbTopicListSection {
             <img
               src={{this.topic.image_url}}
               class="topic-image__img"
-              loading="lazy"
+              loading={{this.imageLoading}}
               decoding="async"
-              fetchpriority="auto"
+              fetchpriority={{this.imageFetchPriority}}
               alt={{this.topic.fancyTitle}}
             >
           </div>

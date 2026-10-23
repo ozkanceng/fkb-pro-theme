@@ -1,5 +1,22 @@
 // FKBC - Global
 
+// Performance & FOIT Prevention: Force font-display swap on custom fonts
+@font-face {
+  font-family: "InterVariable";
+  font-display: swap;
+  src: local("InterVariable"), local("Inter");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-display: swap;
+  src: local("Open Sans"), local("OpenSans");
+}
+
+html {
+  font-display: swap;
+}
+
 // Global
 
 body {

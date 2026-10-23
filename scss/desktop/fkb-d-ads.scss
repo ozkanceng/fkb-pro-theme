@@ -1,17 +1,63 @@
-// FKBD - Discourse Ad Plugin
+// FKBD - Discourse Ad Plugin & Performance CLS Prevention
 
-// Discourse Ad Plugin - Google Adsense Support
+// Anti-CLS: Pre-allocate space for ads to prevent Cumulative Layout Shift
+.google-adsense,
+.ad-unit,
+.discourse-adplugin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1em auto;
+  overflow: hidden;
+  contain: layout;
+  transition: min-height 0.2s ease;
 
-.google-adsense {
+  // Header / Top of feed banner
+  &.above-main-container,
+  &.topic-list-top,
+  &.banner-container {
+    min-height: 90px;
+    @media screen and (max-width: 767px) {
+      min-height: 100px;
+    }
+  }
+
+  // In-feed or post stream ads
+  &.between-topics,
+  &.topic-list-bottom,
+  &.post-bottom {
+    min-height: 250px;
+    @media screen and (max-width: 767px) {
+      min-height: 280px;
+    }
+  }
+
   .google-adsense-label {
     width: 100%;
+    font-size: var(--font-down-3);
+    color: var(--primary-low-mid);
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25em;
   }
+
   .google-adsense-content {
     width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     ins.adsbygoogle {
       width: 100% !important;
-      div#aswift_0_host {
+      margin: 0 auto;
+      display: block;
+
+      div[id^="aswift_"] {
         width: 100% !important;
+        display: flex;
+        justify-content: center;
       }
     }
   }
