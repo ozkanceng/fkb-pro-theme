@@ -2,4 +2,49 @@
 <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<script>
+(function() {
+  if (document.cookie.indexOf("_forum_session") !== -1 || (window.localStorage && localStorage.getItem("current_user"))) {
+    return;
+  }
+  var origOpen = XMLHttpRequest.prototype.open;
+  var origSend = XMLHttpRequest.prototype.send;
+  var isDelayed = true;
+  var pending = [];
+
+  function release() {
+    if (!isDelayed) return;
+    isDelayed = false;
+    window.removeEventListener("pointerdown", release);
+    window.removeEventListener("scroll", release);
+    window.removeEventListener("keydown", release);
+    window.removeEventListener("touchstart", release);
+    while (pending.length) {
+      var item = pending.shift();
+      try {
+        origSend.apply(item.xhr, item.args);
+      } catch (_) {}
+    }
+  }
+
+  setTimeout(release, 3500);
+  window.addEventListener("pointerdown", release, { passive: true, once: true });
+  window.addEventListener("scroll", release, { passive: true, once: true });
+  window.addEventListener("keydown", release, { passive: true, once: true });
+  window.addEventListener("touchstart", release, { passive: true, once: true });
+
+  XMLHttpRequest.prototype.open = function(method, url) {
+    this._isMessageBus = typeof url === "string" && url.indexOf("/message-bus/") !== -1 && url.indexOf("/poll") !== -1;
+    return origOpen.apply(this, arguments);
+  };
+
+  XMLHttpRequest.prototype.send = function() {
+    if (this._isMessageBus && isDelayed) {
+      pending.push({ xhr: this, args: arguments });
+      return;
+    }
+    return origSend.apply(this, arguments);
+  };
+})();
+</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8620054885889497" crossorigin="anonymous"></script>
