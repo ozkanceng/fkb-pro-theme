@@ -4,13 +4,33 @@
 
 @if $disable-topic-list-modification == "false" {
 
-  table.topic-list:not(.bookmark-list) {
+  body:not(.crawler) table.topic-list:not(.bookmark-list) {
     tbody.topic-list-body {
       tr.topic-list-item {
         td.topic-list-data.num,
         td.topic-list-data.posters {
           display: none;
         }
+      }
+    }
+  }
+
+  body.crawler,
+  noscript {
+    table.topic-list {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: table !important;
+      table-layout: auto !important;
+
+      .topic-list-body {
+        display: table-row-group !important;
+      }
+      .topic-list-item {
+        display: table-row !important;
+      }
+      td.topic-list-data {
+        display: table-cell !important;
       }
     }
   }

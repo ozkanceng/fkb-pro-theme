@@ -50,7 +50,9 @@
     "fire",
     "star",
     "clock",
-    "check"
+    "check",
+    "angle-down",
+    "angle-up"
   ],
   "modifiers": {
     "serialize_topic_excerpts": true
