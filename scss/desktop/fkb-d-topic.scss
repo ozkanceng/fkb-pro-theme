@@ -82,10 +82,20 @@ body.archetype-regular {
       flex: 1 1 auto;
       box-sizing: border-box;
       background: var(--secondary) !important;
-      border: 1px solid rgba(var(--primary-rgb), 0.08) !important;
+      border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
       border-radius: var(--d-default-border-radius);
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
       padding: 1.25em 1.5em;
+    }
+
+    article#post_1 .topic-body {
+      border: 1.5px solid rgba(var(--tertiary-rgb), 0.35) !important;
+    }
+
+    article.accepted-answer .topic-body,
+    article[data-accepted-answer="true"] .topic-body {
+      border: 1.5px solid rgba(16, 185, 129, 0.55) !important;
+      border-left: 5px solid var(--fkb-edu-solved, #10b981) !important;
     }
   }
 

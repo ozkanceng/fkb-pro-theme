@@ -1,7 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 import { computed } from "@ember/object";
 import { isTesting } from "discourse/lib/environment";
-import { loadAdsense, safePushAd, waitForAdWidth } from "../lib/fkb-adsense";
+import { loadAdsense, waitForAdWidth } from "../lib/fkb-adsense";
 
 let nextAdId = 0;
 const adIds = new WeakMap();
@@ -12,25 +12,73 @@ function adClass(component) {
   return `fkb-adsense-${adIds.get(component)}`;
 }
 
-function optimizeTopicImages() {
-  const firstPostImg = document.querySelector(
-    "#post_1 .cooked img:not(.avatar):not(.emoji)"
-  );
-  if (firstPostImg) {
-    firstPostImg.setAttribute("fetchpriority", "high");
-    firstPostImg.setAttribute("loading", "eager");
-    firstPostImg.setAttribute("decoding", "async");
-  }
+const PRELOAD_ATTR = "data-fkb-lcp-preload";
 
-  const replyImages = document.querySelectorAll(
-    "article:not(#post_1) .cooked img:not(.avatar):not(.emoji)"
-  );
-  for (const img of replyImages) {
-    if (!img.hasAttribute("loading")) {
-      img.setAttribute("loading", "lazy");
+function getPostFromHelper(helper) {
+  try {
+    const post = helper?.getPost?.();
+    if (post) {
+      return post;
     }
-    if (!img.hasAttribute("decoding")) {
-      img.setAttribute("decoding", "async");
+  } catch {
+    // compatibility fallback
+  }
+  if (helper?.model) {
+    return helper.model;
+  }
+  try {
+    return helper?.getModel?.();
+  } catch {
+    return undefined;
+  }
+}
+
+function prioritizeFirstPostImage(element, helper) {
+  const post = getPostFromHelper(helper);
+  const postNumber = Number(post?.post_number);
+
+  if (postNumber === 1) {
+    const firstImg = element.querySelector(
+      "img:not(.avatar):not(.emoji):not([aria-hidden='true'])"
+    );
+    if (!firstImg) {
+      return;
+    }
+
+    firstImg.loading = "eager";
+    firstImg.setAttribute("loading", "eager");
+    firstImg.fetchPriority = "high";
+    firstImg.setAttribute("fetchpriority", "high");
+    firstImg.decoding = "async";
+    firstImg.setAttribute("decoding", "async");
+
+    const src = firstImg.getAttribute("src");
+    if (src && !document.head.querySelector(`link[${PRELOAD_ATTR}]`)) {
+      const preload = document.createElement("link");
+      preload.rel = "preload";
+      preload.as = "image";
+      preload.href = src;
+      preload.fetchPriority = "high";
+      preload.setAttribute("fetchpriority", "high");
+      preload.setAttribute(PRELOAD_ATTR, "true");
+
+      const srcset = firstImg.getAttribute("srcset");
+      if (srcset) {
+        preload.setAttribute("imagesrcset", srcset);
+      }
+      document.head.appendChild(preload);
+    }
+  } else if (postNumber > 1) {
+    const replyImages = element.querySelectorAll(
+      "img:not(.avatar):not(.emoji)"
+    );
+    for (const img of replyImages) {
+      if (!img.hasAttribute("loading")) {
+        img.setAttribute("loading", "lazy");
+      }
+      if (!img.hasAttribute("decoding")) {
+        img.setAttribute("decoding", "async");
+      }
     }
   }
 }
@@ -39,16 +87,22 @@ export default apiInitializer("1.8.0", (api) => {
   if (isTesting()) {
     return;
   }
+
+  // Preload and optimize LCP question image in post stream
+  api.decorateCookedElement(prioritizeFirstPostImage, {
+    id: "fkb-lcp-image-priority",
+    onlyStream: true,
+  });
+
   const siteSettings = api.container.lookup("service:site-settings");
+  if (!siteSettings?.adsense_publisher_code) {
+    return;
+  }
 
-  // Optimize LCP & offscreen post images on every page navigation
+  // Clean up LCP preload on route changes
   api.onPageChange((url) => {
-    optimizeTopicImages();
+    document.head.querySelector(`link[${PRELOAD_ATTR}]`)?.remove();
 
-    if (!siteSettings?.adsense_publisher_code) {
-      return;
-    }
-    // Admin pages must not launch Auto ads (including navigation vignettes).
     if (/^\/admin(?:\/|$|\?)/.test(url)) {
       return;
     }
@@ -57,79 +111,60 @@ export default apiInitializer("1.8.0", (api) => {
     });
   });
 
-  if (!siteSettings?.adsense_publisher_code) {
-    return;
-  }
-
   // Preserve the plugin's templates, placements, group and user exclusions.
-  // Replace its legacy script and premature trigger stage to prevent width=0, width=52 and duplicate push errors.
+  // Only replace its legacy (client-less) script and request stage.
   api.modifyClass("component:google-adsense", {
     pluginId: "fkb-single-adsense-loader",
-    // The ad plugin uses a tagless component: this.element is absent.
-    // Give its existing template a stable per-instance class instead.
     classForSlot: computed("placement", "showAd", function () {
-      const show = this.get ? this.get("showAd") : this.showAd;
-      const placement = this.get ? this.get("placement") : this.placement;
-      return show ? `adsense-${placement} ${adClass(this)}` : "";
+      return this.get("showAd")
+        ? `adsense-${this.placement} ${adClass(this)}`
+        : "";
     }),
     _triggerAds() {
-      const show = this.get ? this.get("showAd") : this.showAd;
       if (
         /^\/admin(?:\/|$)/.test(window.location.pathname) ||
         this._fkbAdPending ||
         this.adRequested ||
-        !show
+        !this.get("showAd")
       ) {
         return;
       }
 
       const root = document.querySelector(`.${adClass(this)}`);
       const ins = root?.querySelector("ins.adsbygoogle");
-      if (!ins || ins.hasAttribute("data-adsbygoogle-status")) {
+      if (!ins) {
         return;
       }
 
       this._fkbAdPending = true;
-      this._fkbCancelAd = waitForAdWidth(ins, 120, async () => {
+      this._fkbCancelAd = waitForAdWidth(ins, async () => {
         try {
-          await loadAdsense(
-            this.publisher_id || siteSettings.adsense_publisher_code
-          );
-          const stillShow = this.get ? this.get("showAd") : this.showAd;
+          await loadAdsense(this.publisher_id || siteSettings.adsense_publisher_code);
           if (
             this.isDestroying ||
             this.isDestroyed ||
-            !stillShow ||
-            !ins.isConnected ||
-            ins.hasAttribute("data-adsbygoogle-status")
+            !this.get("showAd") ||
+            !ins.isConnected
           ) {
             return;
           }
-
-          const pushed = safePushAd(ins, 120);
-          if (pushed) {
-            if (typeof this.set === "function") {
-              this.set("adRequested", true);
-            } else {
-              this.adRequested = true;
-            }
-          } else {
+          if (ins.getBoundingClientRect().width <= 0) {
             this._fkbAdPending = false;
             this._triggerAds();
+            return;
+          }
+          if (!ins.hasAttribute("data-adsbygoogle-status")) {
+            this.set("adRequested", true);
+            (window.adsbygoogle ||= []).push({});
           }
         } catch (error) {
-          this._fkbAdPending = false;
           console.warn("AdSense:", error.message);
         }
       });
     },
     willDestroyElement() {
       this._fkbCancelAd?.();
-      this._super?.(...arguments);
-    },
-    willDestroy() {
-      this._fkbCancelAd?.();
-      this._super?.(...arguments);
+      this._super(...arguments);
     },
   });
 });

@@ -1,103 +1,34 @@
-// FKB AdSense Layout - Mobile, Tablet and Desktop
-// Prevents CLS layout shift and 52px/0px shrink-to-fit while strictly avoiding layout containment or hidden overflow.
-
-div:has(> .google-adsense),
-.ember-view:has(> .google-adsense),
-.post-stream > div:has(.google-adsense),
-#main-outlet > div:has(.google-adsense) {
-  box-sizing: border-box !important;
-  display: block !important;
-  width: 100% !important;
-  min-width: min(100%, 300px) !important;
-  max-width: 100% !important;
-  flex: 1 1 100% !important;
-}
-
-.google-adsense,
-.ad-unit,
-.discourse-adplugin,
-.discourse-adplugin-post-bottom,
-.discourse-adplugin-topic-above-suggested {
-  box-sizing: border-box !important;
-  display: block !important;
-  width: 100% !important;
-  min-width: min(100%, 300px) !important;
-  max-width: 100% !important;
-  flex: 1 1 100% !important;
-  margin: 1.25rem auto !important;
-  overflow: visible !important;
-  contain: none !important;
-  text-align: center;
-  clear: both;
-
-  // Header / Top of feed / Above post stream banner CLS reservation
-  &.above-main-container,
-  &.adsense-above-site-header,
-  &.topic-list-top,
-  &.adsense-topic-list-top,
-  &.topic-above-post-stream,
-  &.adsense-topic-above-post-stream,
-  &.banner-container {
-    min-height: 90px;
-    @media screen and (max-width: 767px) {
-      min-height: 100px;
-    }
-  }
-
-  // In-feed or post stream ads CLS reservation
-  &.between-topics,
-  &.topic-list-bottom,
-  &.adsense-topic-list-bottom,
-  &.post-bottom,
-  &.adsense-post-bottom,
-  &.topic-above-suggested,
-  &.adsense-topic-above-suggested {
-    min-height: 250px;
-    @media screen and (max-width: 767px) {
-      min-height: 250px;
-    }
-  }
+// Only the advertising plugin's manual slots. Google owns auto-ad/iframe sizing.
+.google-adsense[class*="adsense-"] {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  flex: 0 0 auto;
 
   .google-adsense-label {
-    display: block !important;
-    width: 100% !important;
     text-align: center;
     color: var(--primary-medium);
     font-size: var(--font-down-3);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
   }
 
   .google-adsense-content {
-    box-sizing: border-box !important;
-    display: block !important;
-    width: 100% !important;
-    min-width: min(100%, 300px) !important;
-    max-width: 100% !important;
-    margin-inline: auto !important;
-    text-align: center;
-    overflow: visible !important;
-    contain: none !important;
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: auto;
   }
 
-  // Google's ins tag must be a block with 100% width and NO overflow clipping or containment
-  ins.adsbygoogle {
-    box-sizing: border-box !important;
-    display: block !important;
-    width: 100% !important;
-    min-width: min(100%, 300px) !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    overflow: visible !important;
-    contain: none !important;
+  &.adsense-responsive .google-adsense-content {
+    width: 100%;
+    min-height: 280px;
+  }
 
-    div[id^="aswift_"],
-    iframe {
-      max-width: 100% !important;
-      margin: 0 auto !important;
-      overflow: visible !important;
-      contain: none !important;
-    }
+  // Collapse gracefully if Google reports no fill
+  &:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+    display: none;
   }
 }

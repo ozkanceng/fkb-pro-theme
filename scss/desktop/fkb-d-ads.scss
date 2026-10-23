@@ -1,8 +1,1 @@
-// FKBD - Desktop AdSense layout overrides (base layout defined in common/fkb-c-ads.scss)
-
-.google-adsense,
-.ad-unit,
-.discourse-adplugin {
-  overflow: visible !important;
-  contain: none !important;
-}
+// AdSense layout lives in common/fkb-c-ads for both mobile and desktop.

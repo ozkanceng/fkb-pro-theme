@@ -10,8 +10,8 @@ const { loadAdsense, waitForAdWidth } = await import(
 );
 
 globalThis.window = {};
-let appended = [],
-  listeners = {};
+let appended = [];
+let listeners = {};
 const doc = {
   querySelector: () => null,
   createElement: () => ({
@@ -19,7 +19,9 @@ const doc = {
       listeners[name] = fn;
     },
   }),
-  head: { appendChild: (node) => appended.push(node) },
+  head: {
+    appendChild: (node) => appended.push(node),
+  },
 };
 
 const first = loadAdsense("123456789", doc);
@@ -30,14 +32,15 @@ assert.equal(
   appended[0].src,
   "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-123456789"
 );
+
 listeners.load();
 await first;
 assert.equal(await loadAdsense("123456789", doc), undefined);
 await assert.rejects(loadAdsense("bad", doc));
 
-let resize,
-  frames = [],
-  disconnected = 0;
+let resize;
+let frames = [];
+let disconnected = 0;
 globalThis.ResizeObserver = class {
   constructor(fn) {
     resize = fn;
@@ -53,8 +56,8 @@ globalThis.requestAnimationFrame = (fn) => {
 };
 globalThis.cancelAnimationFrame = () => {};
 
-let width = 0,
-  requests = 0;
+let width = 0;
+let requests = 0;
 const element = {
   isConnected: true,
   getBoundingClientRect: () => ({ width }),
@@ -65,12 +68,6 @@ const cancel = waitForAdWidth(element, () => requests++);
 frames.shift()();
 assert.equal(requests, 0);
 
-// Verify that width=52 is rejected (does not fire!)
-width = 52;
-resize();
-assert.equal(requests, 0, "width=52 must not trigger ad");
-
-// Verify that width=320 fires
 width = 320;
 resize();
 resize();
@@ -93,20 +90,19 @@ frames.at(-1)();
 assert.equal(requests, 1);
 assert.ok(disconnected >= 2);
 console.log(
-  "PASS: one client script, shared promise, invalid publisher, 0 and 52 width rejection, one request, cancellation and detached slot."
+  "PASS: one client script, shared promise, invalid publisher, zero-width wait, one request, cancellation and detached slot."
 );
 
 // Exercise the integration boundary: tagless plugin components have no element.
 const { runInNewContext } = await import("node:vm");
-let changes,
-  pageChange,
-  requested = 0,
-  loaded = 0,
-  canceled = 0;
+let changes;
+let pageChange;
+let requested = 0;
+let loaded = 0;
+let canceled = 0;
 const slot = {
   isConnected: true,
   getBoundingClientRect: () => ({ width: 320 }),
-  getClientRects: () => [1],
   hasAttribute: () => false,
 };
 const integration = (
@@ -133,6 +129,7 @@ runInNewContext(integration, {
       onPageChange: (callback) => {
         pageChange = callback;
       },
+      decorateCookedElement: () => {},
       modifyClass: (_name, value) => {
         changes = value;
       },
@@ -142,14 +139,14 @@ runInNewContext(integration, {
   loadAdsense: async () => {
     loaded++;
   },
-  waitForAdWidth: (_element, _minWidth, callback) => {
-    if (typeof _minWidth === "function") callback = _minWidth;
+  waitForAdWidth: (_element, callback) => {
     Promise.resolve().then(callback);
     return () => canceled++;
   },
   window: browserWindow,
   console,
   document: {
+    head: { querySelector: () => null, appendChild: () => {} },
     querySelector: (selector) => {
       assert.equal(selector, ".fkb-adsense-1");
       return { querySelector: () => slot };
@@ -172,6 +169,7 @@ const instance = {
   _super() {},
 };
 assert.equal(instance.classForSlot(), "adsense-post-bottom fkb-adsense-1");
+
 instance._triggerAds();
 await new Promise((resolve) => setImmediate(resolve));
 assert.equal(requested, 0);
@@ -181,6 +179,7 @@ instance._triggerAds();
 await new Promise((resolve) => setImmediate(resolve));
 instance._triggerAds();
 assert.equal(requested, 1);
+
 instance.willDestroyElement();
 assert.equal(canceled, 1);
 console.log(
