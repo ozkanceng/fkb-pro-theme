@@ -93,7 +93,7 @@ console.log(
   "PASS: one client script, shared promise, invalid publisher, zero-width wait, one request, cancellation and detached slot."
 );
 
-// Exercise the integration boundary: tagless plugin components have no element.
+// Exercise the integration boundary: both classic Ember and modern Glimmer tagless components.
 const { runInNewContext } = await import("node:vm");
 let changes;
 let pageChange;
@@ -104,6 +104,7 @@ const slot = {
   isConnected: true,
   getBoundingClientRect: () => ({ width: 320 }),
   hasAttribute: () => false,
+  setAttribute: () => {},
 };
 const integration = (
   await readFile(
@@ -147,8 +148,9 @@ runInNewContext(integration, {
   console,
   document: {
     head: { querySelector: () => null, appendChild: () => {} },
+    querySelectorAll: () => [slot],
     querySelector: (selector) => {
-      assert.equal(selector, ".fkb-adsense-1");
+      assert.match(selector, /^\.fkb-adsense-\d+$/);
       return { querySelector: () => slot };
     },
   },
@@ -157,31 +159,56 @@ runInNewContext(integration, {
 pageChange("/admin/customize/themes/1");
 assert.equal(loaded, 0);
 pageChange("/t/question/1");
+await new Promise((resolve) => setImmediate(resolve));
 assert.equal(loaded, 1);
 
-const instance = {
+// Test 1: Classic Ember instance with get/set
+const classicInstance = {
   ...changes,
   placement: "post-bottom",
-  get: () => true,
+  showAd: true,
+  get(key) {
+    return this[key];
+  },
   set(key, value) {
     this[key] = value;
   },
   _super() {},
 };
-assert.equal(instance.classForSlot(), "adsense-post-bottom fkb-adsense-1");
+assert.equal(classicInstance.classForSlot(), "adsense-post-bottom fkb-adsense-1");
 
-instance._triggerAds();
+classicInstance._triggerAds();
 await new Promise((resolve) => setImmediate(resolve));
 assert.equal(requested, 0);
 
 browserWindow.location.pathname = "/t/question/1";
-instance._triggerAds();
+classicInstance._triggerAds();
 await new Promise((resolve) => setImmediate(resolve));
-instance._triggerAds();
+classicInstance._triggerAds();
 assert.equal(requested, 1);
 
-instance.willDestroyElement();
+classicInstance.willDestroyElement();
 assert.equal(canceled, 1);
+
+// Test 2: Modern Glimmer instance without get/set
+const glimmerInstance = {
+  ...changes,
+  placement: "topic-above-post-stream",
+  showAd: true,
+  _super() {},
+};
+assert.equal(
+  glimmerInstance.classForSlot(),
+  "adsense-topic-above-post-stream fkb-adsense-2"
+);
+
+glimmerInstance._triggerAds();
+await new Promise((resolve) => setImmediate(resolve));
+assert.equal(requested, 2);
+
+glimmerInstance.willDestroy();
+assert.equal(canceled, 2);
+
 console.log(
-  "PASS: tagless component slot lookup, admin exclusion, public navigation, one request and teardown."
+  "PASS: classic Ember and modern Glimmer compatibility, admin exclusion, navigation, request gating and teardown."
 );

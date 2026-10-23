@@ -1,4 +1,4 @@
-// Only Discourse Ad Plugin's manual slots. Google Auto Ads (anchors, vignettes, rails) remain untouched.
+// Discourse Ad Plugin's manual slots. Google Auto Ads (anchors, vignettes, rails) remain untouched.
 .google-adsense[class*="adsense-"] {
   box-sizing: border-box;
   display: block;
@@ -30,10 +30,12 @@
   &.adsense-post-bottom,
   &.topic-above-suggested,
   &.adsense-topic-above-suggested {
-    min-height: 250px;
+    min-height: 200px;
   }
 
   .google-adsense-label {
+    display: block;
+    width: 100%;
     text-align: center;
     color: var(--primary-medium);
     font-size: var(--font-down-3);
@@ -42,13 +44,19 @@
     margin-bottom: 0.35rem;
   }
 
+  // Must remain a block with 100% width so <ins class="adsbygoogle"> has positive availableWidth.
+  // Never use display: flex here as flex items with empty content shrink to width=0!
   .google-adsense-content {
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block !important;
+    width: 100% !important;
     min-width: 0;
     max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  ins.adsbygoogle {
     margin-inline: auto;
     text-align: center;
   }

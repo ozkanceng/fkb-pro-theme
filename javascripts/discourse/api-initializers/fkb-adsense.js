@@ -83,6 +83,33 @@ function prioritizeFirstPostImage(element, helper) {
   }
 }
 
+// Fallback DOM scanner ensuring manual slots are safely requested once container width is available,
+// even if a modernized Glimmer .gjs component in Discourse core bypassed modifyClass.
+function scanAndTriggerDomAds(publisher) {
+  if (/^\/admin(?:\/|$|\?)/.test(window.location.pathname)) {
+    return;
+  }
+  const pending = document.querySelectorAll(
+    ".google-adsense ins.adsbygoogle:not([data-adsbygoogle-status]):not([data-fkb-watching])"
+  );
+  for (const ins of pending) {
+    ins.setAttribute("data-fkb-watching", "true");
+    waitForAdWidth(ins, async () => {
+      try {
+        await loadAdsense(publisher);
+        if (!ins.isConnected || ins.hasAttribute("data-adsbygoogle-status")) {
+          return;
+        }
+        if (ins.getBoundingClientRect().width > 0) {
+          (window.adsbygoogle ||= []).push({});
+        }
+      } catch (error) {
+        console.warn("AdSense fallback:", error.message);
+      }
+    });
+  }
+}
+
 export default apiInitializer("1.8.0", (api) => {
   if (isTesting()) {
     return;
@@ -99,33 +126,36 @@ export default apiInitializer("1.8.0", (api) => {
     return;
   }
 
-  // Clean up LCP preload on route changes
+  // Clean up LCP preload on route changes and trigger manual slots
   api.onPageChange((url) => {
     document.head.querySelector(`link[${PRELOAD_ATTR}]`)?.remove();
 
     if (/^\/admin(?:\/|$|\?)/.test(url)) {
       return;
     }
-    loadAdsense(siteSettings.adsense_publisher_code).catch((error) => {
-      console.warn("AdSense:", error.message);
-    });
+    loadAdsense(siteSettings.adsense_publisher_code)
+      .then(() => scanAndTriggerDomAds(siteSettings.adsense_publisher_code))
+      .catch((error) => {
+        console.warn("AdSense:", error.message);
+      });
   });
 
   // Preserve the plugin's templates, placements, group and user exclusions.
-  // Only replace its legacy (client-less) script and request stage.
+  // Works seamlessly with both classic Ember and modern Glimmer component instances.
   api.modifyClass("component:google-adsense", {
     pluginId: "fkb-single-adsense-loader",
     classForSlot: computed("placement", "showAd", function () {
-      return this.get("showAd")
-        ? `adsense-${this.placement} ${adClass(this)}`
-        : "";
+      const show = typeof this.get === "function" ? this.get("showAd") : this.showAd;
+      const placement = typeof this.get === "function" ? this.get("placement") : this.placement;
+      return show ? `adsense-${placement} ${adClass(this)}` : "";
     }),
     _triggerAds() {
+      const show = typeof this.get === "function" ? this.get("showAd") : this.showAd;
       if (
         /^\/admin(?:\/|$)/.test(window.location.pathname) ||
         this._fkbAdPending ||
         this.adRequested ||
-        !this.get("showAd")
+        !show
       ) {
         return;
       }
@@ -136,14 +166,18 @@ export default apiInitializer("1.8.0", (api) => {
         return;
       }
 
+      ins.setAttribute("data-fkb-watching", "true");
       this._fkbAdPending = true;
       this._fkbCancelAd = waitForAdWidth(ins, async () => {
         try {
-          await loadAdsense(this.publisher_id || siteSettings.adsense_publisher_code);
+          await loadAdsense(
+            this.publisher_id || siteSettings.adsense_publisher_code
+          );
+          const stillShow = typeof this.get === "function" ? this.get("showAd") : this.showAd;
           if (
             this.isDestroying ||
             this.isDestroyed ||
-            !this.get("showAd") ||
+            !stillShow ||
             !ins.isConnected
           ) {
             return;
@@ -154,7 +188,11 @@ export default apiInitializer("1.8.0", (api) => {
             return;
           }
           if (!ins.hasAttribute("data-adsbygoogle-status")) {
-            this.set("adRequested", true);
+            if (typeof this.set === "function") {
+              this.set("adRequested", true);
+            } else {
+              this.adRequested = true;
+            }
             (window.adsbygoogle ||= []).push({});
           }
         } catch (error) {
@@ -164,7 +202,11 @@ export default apiInitializer("1.8.0", (api) => {
     },
     willDestroyElement() {
       this._fkbCancelAd?.();
-      this._super(...arguments);
+      this._super?.(...arguments);
+    },
+    willDestroy() {
+      this._fkbCancelAd?.();
+      this._super?.(...arguments);
     },
   });
 });
