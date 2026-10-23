@@ -1,0 +1,83 @@
+// FKB AdSense Layout - Mobile, Tablet and Desktop
+// Prevents CLS layout shift while strictly avoiding layout containment or hidden overflow that breaks AdSense.
+
+.google-adsense,
+.ad-unit,
+.discourse-adplugin,
+.discourse-adplugin-post-bottom,
+.discourse-adplugin-topic-above-suggested {
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 1.5rem auto !important;
+  overflow: visible !important;
+  contain: none !important;
+  text-align: center;
+  clear: both;
+
+  // Header / Top of feed banner CLS reservation
+  &.above-main-container,
+  &.topic-list-top,
+  &.banner-container {
+    min-height: 90px;
+    @media screen and (max-width: 767px) {
+      min-height: 100px;
+    }
+  }
+
+  // In-feed or post stream ads CLS reservation
+  &.between-topics,
+  &.topic-list-bottom,
+  &.post-bottom,
+  &.topic-above-suggested {
+    min-height: 250px;
+    @media screen and (max-width: 767px) {
+      min-height: 280px;
+    }
+  }
+
+  .google-adsense-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: var(--primary-medium);
+    font-size: var(--font-down-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+
+  .google-adsense-content {
+    box-sizing: border-box !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    text-align: center;
+    overflow: visible !important;
+    contain: none !important;
+  }
+
+  // Google's ins tag must be a block with 100% width and NO overflow clipping or containment
+  ins.adsbygoogle {
+    box-sizing: border-box !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 250px;
+    margin: 0 auto !important;
+    overflow: visible !important;
+    contain: none !important;
+
+    div[id^="aswift_"] {
+      width: 100% !important;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      overflow: visible !important;
+      contain: none !important;
+    }
+  }
+}

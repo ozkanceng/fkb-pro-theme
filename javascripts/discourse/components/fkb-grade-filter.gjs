@@ -1,5 +1,4 @@
 import Component from "@glimmer/component";
-import icon from "discourse/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
 
 export default class FkbGradeFilter extends Component {
@@ -9,20 +8,20 @@ export default class FkbGradeFilter extends Component {
 
   get filterPills() {
     return [
-      { labelKey: "fkb_filter.latest", url: "/latest", icon: "fire" },
-      { labelKey: "fkb_filter.unsolved", url: "/filter?solved=no", icon: "clock" },
-      { labelKey: "fkb_filter.solved", url: "/filter?solved=yes", icon: "check" },
-      { labelKey: "fkb_filter.top", url: "/top", icon: "star" },
-      { labelKey: "fkb_filter.tyt_yks", url: "/tag/tyt", icon: "graduation-cap" },
-      { labelKey: "fkb_filter.lgs", url: "/tag/lgs", icon: "book-open" },
+      { labelKey: "fkb_filter.latest", url: "/latest" },
+      { labelKey: "fkb_filter.unsolved", url: "/filter?solved=no" },
+      { labelKey: "fkb_filter.solved", url: "/filter?solved=yes" },
+      { labelKey: "fkb_filter.top", url: "/top" },
+      { labelKey: "fkb_filter.tyt_yks", url: "/tag/tyt" },
+      { labelKey: "fkb_filter.lgs", url: "/tag/lgs" },
       { labelKey: "fkb_filter.grade_9", url: "/tag/9-sinif" },
       { labelKey: "fkb_filter.grade_10", url: "/tag/10-sinif" },
       { labelKey: "fkb_filter.grade_11", url: "/tag/11-sinif" },
       { labelKey: "fkb_filter.grade_12", url: "/tag/12-sinif" },
-      { labelKey: "fkb_filter.math", url: "/c/ders-notlari/10", icon: "calculator" },
-      { labelKey: "fkb_filter.physics", url: "/tag/fizik", icon: "atom" },
-      { labelKey: "fkb_filter.chemistry", url: "/tag/kimya", icon: "flask" },
-      { labelKey: "fkb_filter.biology", url: "/tag/biyoloji", icon: "dna" },
+      { labelKey: "fkb_filter.math", url: "/c/ders-notlari/10" },
+      { labelKey: "fkb_filter.physics", url: "/tag/fizik" },
+      { labelKey: "fkb_filter.chemistry", url: "/tag/kimya" },
+      { labelKey: "fkb_filter.biology", url: "/tag/biyoloji" },
     ];
   }
 
@@ -32,9 +31,6 @@ export default class FkbGradeFilter extends Component {
         <div class="fkb-grade-filter-scroll">
           {{#each this.filterPills as |pill|}}
             <a href={{pill.url}} class="fkb-grade-pill">
-              {{#if pill.icon}}
-                {{icon pill.icon}}
-              {{/if}}
               <span class="fkb-grade-pill__label">{{i18n (themePrefix pill.labelKey)}}</span>
             </a>
           {{/each}}

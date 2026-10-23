@@ -465,19 +465,7 @@ aside.quote.accepted-answer {
   }
 }
 
-// In-topic AdSense CLS & layout stability
-.google-adsense,
-.adsbygoogle,
-.discourse-adplugin-post-bottom,
-.discourse-adplugin-topic-above-suggested {
-  min-height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  contain: layout paint;
-  margin: 0.5em 0;
-}
+
 
 // No answer popup
 
@@ -677,73 +665,6 @@ blockquote aside.onebox {
   }
 }
 
-// Sorumatik Smart Question Collapse (Devamını Gör / Daha Az Göster)
-.cooked.sorumatik-collapsed {
-  max-height: 250px !important;
-  overflow: hidden !important;
-  position: relative !important;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 90px;
-    background: linear-gradient(to bottom, rgba(var(--secondary-rgb), 0), var(--secondary) 92%);
-    pointer-events: none;
-    z-index: 2;
-  }
-}
-
-.cooked.sorumatik-expanded {
-  max-height: 6000px !important;
-  transition: max-height 0.45s ease-in-out;
-
-  &::after {
-    display: none !important;
-  }
-}
-
-.sorumatik-expand-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 0.6em 0 0.8em 0;
-  position: relative;
-  z-index: 3;
-
-  .sorumatik-expand-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--tertiary);
-    background: rgba(var(--tertiary-rgb), 0.08);
-    border: 1px solid rgba(var(--tertiary-rgb), 0.22);
-    border-radius: 20px;
-    padding: 6px 18px;
-    cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: var(--tertiary);
-      color: #ffffff;
-      border-color: var(--tertiary);
-
-      svg {
-        fill: #ffffff;
-      }
-    }
-
-    svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
-    }
-  }
-}
 
 

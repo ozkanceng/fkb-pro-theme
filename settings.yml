@@ -177,18 +177,5 @@ dark_btn_hover:
   default: "rgba(var(--primary-rgb),.1)"
   description: "Dark buttons hover color"
 
-performance_optimizations_enabled:
-  default: true
-  type: bool
-  description: "Delay ads on anonymous topic pages until after initial LCP and near-viewport scroll."
 
-ad_root_margin:
-  default: "600px 0px"
-  type: string
-  description: "Distance from viewport at which ads may load."
-
-prioritize_first_post_image:
-  default: true
-  type: bool
-  description: "Preload and prioritize first post image in topics."
 
