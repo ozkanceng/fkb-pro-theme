@@ -1,0 +1,16 @@
+// Discourse lib/viewport compatibility fallback
+@mixin until($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: 991px) {
+      @content;
+    }
+  } @else {
+    @media (max-width: 1199px) {
+      @content;
+    }
+  }
+}

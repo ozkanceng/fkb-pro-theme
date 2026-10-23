@@ -1,3 +1,19 @@
+// Default Fallbacks for Standalone Sass & CI Verification
+$border_radius_button: "2em" !default;
+$border_radius_em: "1em" !default;
+$border_radius_input: "2em" !default;
+$border_radius_select_body: "0.75em" !default;
+$border_radius_avatar: "50%" !default;
+$disable-topic-list-modification: "false" !default;
+$category-badge-style: "bullet" !default;
+$topic_image_height: "300px" !default;
+$topic_image_backdrop_brightness: "0.65" !default;
+$topic_image_fit: "cover" !default;
+$right-sidebar-below-fkb-panel: "false" !default;
+$right-sidebar-blocks-expanded: "false" !default;
+$right-sidebar-blocks-enabled: "false" !default;
+$f-nav-enabled: "false" !default;
+
 // Global
 
 :root {
@@ -8,6 +24,9 @@
   --d-avatar-border-radius: #{$border_radius_avatar};
   --topic-list-item-background-color: transparent;
   --topic-list-item-background-color--visited: transparent;
+
+  // Global Font Family with iOS Emoji Support
+  --fkb-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   // Education Theme Tokens
   --fkb-edu-solved: #10b981;
@@ -38,6 +57,11 @@
 @mixin fkb-focus {
   outline: none !important;
   box-shadow: 0px 0px 0px 1px var(--tertiary);
+}
+
+@mixin default-focus {
+  outline: 2px solid var(--tertiary);
+  outline-offset: 1px;
 }
 
 @mixin fkb-word-wrap {
