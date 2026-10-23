@@ -17,6 +17,7 @@ en:
     sqrt: "Square Root (\\sqrt{x})"
     power: "Superscript (x²)"
   fkb_filter:
+    label: "Grade and subject filters"
     all: "All"
     latest: "Latest"
     unsolved: "Unanswered"

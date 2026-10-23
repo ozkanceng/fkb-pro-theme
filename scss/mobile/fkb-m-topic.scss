@@ -1,6 +1,187 @@
 // FKBM - Topic
 
-// Topics - Full Page Edge-to-Edge Responsive Layout
+// Topics - Full-Width White Canvas for Question and Answers, Normal FKB Background for Page
+
+.mobile-view.archetype-regular,
+.mobile-view .archetype-regular {
+  #main-outlet-wrapper {
+    padding-inline: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  #main-outlet {
+    padding-inline: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  #topic-title {
+    background: var(--secondary);
+    padding: 14px 16px 10px 16px;
+    margin: 0;
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+
+    .title-wrapper {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .container.posts {
+    background: var(--secondary);
+    grid-template-areas: "posts";
+    grid-template-columns: 100%;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    > .row {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .topic-navigation {
+      grid-area: posts;
+      grid-row: 2;
+      width: auto;
+    }
+  }
+
+  .post-stream {
+    background: var(--secondary);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    .topic-post {
+      background: var(--secondary);
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
+      box-sizing: border-box;
+
+      article {
+        background: var(--secondary);
+        border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+
+        .topic-body {
+          background: var(--secondary);
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+          padding: 14px 16px;
+          border-radius: 0;
+          border: none;
+          box-shadow: none;
+        }
+
+        &#post_1 {
+          padding-top: 0;
+
+          .topic-body {
+            background: var(--secondary);
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            padding: 14px 16px;
+          }
+
+          .cooked {
+            font-size: 16px;
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            color: var(--primary);
+
+            p {
+              margin-bottom: 0.85em;
+            }
+
+            img:not(.avatar):not(.emoji) {
+              max-width: 100%;
+              height: auto;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+              border: 1px solid rgba(var(--primary-rgb), 0.06);
+              margin: 0.5em 0;
+              display: block;
+              box-sizing: border-box;
+            }
+          }
+        }
+
+        // Verified Solution
+        &.accepted-answer,
+        &[data-accepted-answer="true"] {
+          .topic-body {
+            border-left: 4px solid var(--fkb-edu-solved, #10b981);
+            border-radius: 0;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            background: rgba(16, 185, 129, 0.035);
+            box-shadow: none;
+            padding: 14px 16px;
+          }
+
+          .cooked {
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--primary);
+          }
+        }
+
+        .cooked .lightbox img {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+    .small-action {
+      max-width: 100%;
+      border-top: none;
+      &.topic-post-visited {
+        .topic-post-visited-line {
+          margin: 1rem auto;
+          max-width: 300px;
+        }
+      }
+      .topic-avatar {
+        margin: 0;
+        .d-icon {
+          width: 25px;
+          height: 25px;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+// Fallback baseline for non-archetype-regular mobile containers
 
 .container.posts {
   grid-template-areas: "posts";
@@ -23,121 +204,6 @@
     grid-area: posts;
     grid-row: 2;
     width: auto;
-  }
-}
-
-.post-stream {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  box-sizing: border-box;
-
-  .topic-post {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
-    box-sizing: border-box;
-
-    article {
-      border: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      box-sizing: border-box;
-
-      .topic-body {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        padding: 14px 16px;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
-        background: var(--secondary);
-      }
-
-      &#post_1 {
-        padding-top: 0;
-
-        .topic-body {
-          border-radius: 0;
-          border: none;
-          box-shadow: none;
-          background: var(--secondary);
-          padding: 14px 16px;
-        }
-
-        .cooked {
-          font-size: 16px;
-          line-height: 1.65;
-          letter-spacing: -0.01em;
-          color: var(--primary);
-
-          p {
-            margin-bottom: 0.85em;
-          }
-
-          img:not(.avatar):not(.emoji) {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(var(--primary-rgb), 0.06);
-            margin: 0.5em 0;
-            display: block;
-            box-sizing: border-box;
-          }
-        }
-      }
-
-      // Verified Solution
-      &.accepted-answer,
-      &[data-accepted-answer="true"] {
-        .topic-body {
-          border-left: 4px solid var(--fkb-edu-solved, #10b981);
-          border-radius: 0;
-          border-top: none;
-          border-right: none;
-          border-bottom: none;
-          background: rgba(16, 185, 129, 0.035);
-          box-shadow: none;
-          padding: 14px 16px;
-        }
-
-        .cooked {
-          font-size: 16px;
-          line-height: 1.65;
-          color: var(--primary);
-        }
-      }
-
-      .cooked .lightbox img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        box-sizing: border-box;
-      }
-    }
-  }
-  .small-action {
-    max-width: 100%;
-    border-top: none;
-    &.topic-post-visited {
-      .topic-post-visited-line {
-        margin: 1rem auto;
-        max-width: 300px;
-      }
-    }
-    .topic-avatar {
-      margin: 0;
-      .d-icon {
-        width: 25px;
-        height: 25px;
-        text-align: left;
-      }
-    }
   }
 }
 

@@ -27,7 +27,7 @@ export default class FkbGradeFilter extends Component {
 
   <template>
     {{#if this.showFilter}}
-      <nav class="fkb-grade-filter-bar" aria-label="Sınıf ve Ders Filtreleri">
+      <nav class="fkb-grade-filter-bar" aria-label={{i18n (themePrefix "fkb_filter.label")}}>
         <div class="fkb-grade-filter-scroll">
           {{#each this.filterPills as |pill|}}
             <a href={{pill.url}} class="fkb-grade-pill">

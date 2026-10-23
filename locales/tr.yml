@@ -17,6 +17,7 @@ tr:
     sqrt: "Karekök Formülü (\\sqrt{x})"
     power: "Üslü Sayı (x²)"
   fkb_filter:
+    label: "Sınıf ve ders filtreleri"
     all: "Tümü"
     latest: "En Son"
     unsolved: "Cevap Bekleyenler"

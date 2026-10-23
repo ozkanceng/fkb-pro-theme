@@ -1,7 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.8.0", (api) => {
-  if (!settings.enable_math_quick_bar) {
+  if (!settings.education_mode || !settings.enable_math_quick_bar) {
     return;
   }
 

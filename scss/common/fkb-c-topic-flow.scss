@@ -1,0 +1,108 @@
+// FKB Topic Flow - Continuous fluid stream with layout safety
+
+.archetype-regular {
+  #topic-title {
+    max-width: 100%;
+  }
+
+  .container.posts > .row,
+  .topic-area,
+  .post-stream {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .topic-post article > .row {
+    min-width: 0;
+  }
+
+  .topic-map,
+  .topic-map.--bottom,
+  #topic-footer-buttons,
+  .more-topics__container,
+  .topic-status-info,
+  .topic-timer-info,
+  .posts-filtered-notice,
+  .topic-area > .loading-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .cooked {
+    overflow-wrap: anywhere;
+
+    img:not(.emoji):not(.avatar),
+    .lightbox-wrapper {
+      max-width: 100%;
+      height: auto;
+    }
+
+    pre,
+    .md-table {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+  }
+
+  aside.quote.accepted-answer {
+    border-radius: 0;
+    box-shadow: none;
+
+    > .title {
+      background: var(--fkb-edu-solved-bg);
+      color: var(--primary);
+      border: 0;
+      border-inline-start: 3px solid var(--fkb-edu-solved);
+
+      a,
+      .d-icon,
+      span.by a {
+        color: var(--primary);
+      }
+    }
+
+    > blockquote {
+      border-radius: 0;
+    }
+  }
+}
+
+.desktop-view .archetype-regular {
+  .container.posts {
+    grid-template-columns: minmax(0, 1fr) var(--topic-timeline-width, 150px);
+  }
+
+  .topic-avatar {
+    flex: 0 0 var(--topic-avatar-width);
+  }
+}
+
+@media (max-width: 999px) {
+  .desktop-view .archetype-regular .container.posts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.mobile-view .archetype-regular {
+  #main-outlet-wrapper {
+    padding-inline: 0;
+  }
+
+  #main-outlet {
+    box-sizing: border-box;
+    min-width: 0;
+    padding-inline: 0;
+  }
+
+  .custom-footer {
+    .first-box,
+    .second-box,
+    .links {
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+  }
+}
