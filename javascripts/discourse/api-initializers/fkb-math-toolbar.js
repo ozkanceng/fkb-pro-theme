@@ -15,7 +15,7 @@ export default apiInitializer("1.8.0", (api) => {
       group: "extras",
       icon: "divide",
       title: prefix("fkb_math.fraction"),
-      perform: (e) => e.applySurround("$\\frac{", "}{b}$", "a"),
+      perform: (e) => e.applySurround("$\\frac{a}{b}$", ""),
     });
 
     toolbar.addButton({
@@ -23,7 +23,7 @@ export default apiInitializer("1.8.0", (api) => {
       group: "extras",
       icon: "square-root-variable",
       title: prefix("fkb_math.sqrt"),
-      perform: (e) => e.applySurround("$\\sqrt{", "}$", "x"),
+      perform: (e) => e.applySurround("$\\sqrt{x}$", ""),
     });
 
     toolbar.addButton({
@@ -31,7 +31,7 @@ export default apiInitializer("1.8.0", (api) => {
       group: "extras",
       icon: "superscript",
       title: prefix("fkb_math.power"),
-      perform: (e) => e.applySurround("^{", "}", "2"),
+      perform: (e) => e.applySurround("^{2}", ""),
     });
   });
 });
