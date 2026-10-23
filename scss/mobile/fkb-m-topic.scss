@@ -1,31 +1,28 @@
 // FKBM - Topic
 
-// Topics - Full-Width White Canvas for Question and Answers, Normal FKB Background for Page
+// Topics - Symmetrical Card Design on Mobile with No Horizontal Overflow
 
 .mobile-view.archetype-regular,
 .mobile-view .archetype-regular {
   #main-outlet-wrapper {
-    padding-inline: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0;
   }
 
   #main-outlet {
-    padding-inline: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
   }
 
   #topic-title {
-    background: var(--secondary);
-    padding: 14px 16px 10px 16px;
-    margin: 0;
-    border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
+    padding: 0.5em 2px;
+    margin-bottom: 0.5em;
+    background: transparent;
+    border: none;
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
@@ -37,19 +34,19 @@
   }
 
   .container.posts {
-    background: var(--secondary);
+    background: transparent;
     grid-template-areas: "posts";
     grid-template-columns: 100%;
     width: 100%;
     max-width: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
 
     > .row {
       width: 100%;
       max-width: 100%;
-      margin: 0;
+      margin: 0 auto;
       padding: 0;
       box-sizing: border-box;
     }
@@ -62,23 +59,23 @@
   }
 
   .post-stream {
-    background: var(--secondary);
+    background: transparent;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
 
     .topic-post {
-      background: var(--secondary);
+      background: transparent;
       width: 100%;
       max-width: 100%;
-      margin: 0;
+      margin: 0 0 12px 0;
       padding: 0;
-      border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
+      border: none;
       box-sizing: border-box;
 
       article {
-        background: var(--secondary);
+        background: transparent;
         border: none;
         padding: 0;
         margin: 0;
@@ -86,25 +83,26 @@
         box-sizing: border-box;
 
         .topic-body {
-          background: var(--secondary);
           width: 100%;
           max-width: 100%;
           box-sizing: border-box;
-          padding: 14px 16px;
-          border-radius: 0;
-          border: none;
-          box-shadow: none;
+          padding: 1.1em 1.15em;
+          border-radius: 16px;
+          border: 1px solid rgba(var(--primary-rgb), 0.08);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+          background: var(--secondary);
+          transition: box-shadow 0.2s ease;
         }
 
         &#post_1 {
           padding-top: 0;
 
           .topic-body {
+            border: 1.5px solid rgba(var(--tertiary-rgb), 0.25);
+            border-radius: 18px;
             background: var(--secondary);
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
-            padding: 14px 16px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+            padding: 1.2em;
           }
 
           .cooked {
@@ -120,7 +118,7 @@
             img:not(.avatar):not(.emoji) {
               max-width: 100%;
               height: auto;
-              border-radius: 8px;
+              border-radius: 10px;
               box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
               border: 1px solid rgba(var(--primary-rgb), 0.06);
               margin: 0.5em 0;
@@ -130,18 +128,16 @@
           }
         }
 
-        // Verified Solution
+        // Verified Solution Card
         &.accepted-answer,
         &[data-accepted-answer="true"] {
           .topic-body {
-            border-left: 4px solid var(--fkb-edu-solved, #10b981);
-            border-radius: 0;
-            border-top: none;
-            border-right: none;
-            border-bottom: none;
+            border: 1.5px solid rgba(16, 185, 129, 0.35);
+            border-left: 5px solid var(--fkb-edu-solved, #10b981);
+            border-radius: 16px;
             background: rgba(16, 185, 129, 0.035);
-            box-shadow: none;
-            padding: 14px 16px;
+            box-shadow: 0 3px 12px rgba(16, 185, 129, 0.08);
+            padding: 1.15em;
           }
 
           .cooked {
@@ -189,13 +185,13 @@
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
   box-sizing: border-box;
 
   > .row {
     width: 100%;
     max-width: 100%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
   }
