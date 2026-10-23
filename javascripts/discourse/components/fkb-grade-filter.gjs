@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import icon from "discourse/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
+import { themePrefix } from "discourse-common/lib/theme-prefix";
 
 export default class FkbGradeFilter extends Component {
   get showFilter() {

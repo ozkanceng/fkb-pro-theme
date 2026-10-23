@@ -22,7 +22,7 @@ export default apiInitializer("1.8.0", (api) => {
   });
 
   if (!settings.disable_topic_list_modification) {
-    api.renderInOutlet("discovery-list-controls-after", FkbGradeFilter);
+    api.renderInOutlet("discovery-list-container-top", FkbGradeFilter);
     api.renderInOutlet("topic-list-before-link", FkbTopicHeader);
     api.renderInOutlet("topic-list-main-link-bottom", FkbTopicBody);
   }

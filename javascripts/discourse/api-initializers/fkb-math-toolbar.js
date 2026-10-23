@@ -1,4 +1,5 @@
 import { apiInitializer } from "discourse/lib/api";
+import { themePrefix } from "discourse-common/lib/theme-prefix";
 
 export default apiInitializer("1.8.0", (api) => {
   if (!settings.enable_math_quick_bar) {
@@ -10,7 +11,7 @@ export default apiInitializer("1.8.0", (api) => {
       id: "fkb-math-fraction",
       group: "extras",
       icon: "divide",
-      title: "theme_metadata.fkb_math.fraction",
+      title: themePrefix("fkb_math.fraction"),
       perform: (e) => e.applySurround("$\\frac{", "}{b}$", "a"),
     });
 
@@ -18,7 +19,7 @@ export default apiInitializer("1.8.0", (api) => {
       id: "fkb-math-sqrt",
       group: "extras",
       icon: "square-root-variable",
-      title: "theme_metadata.fkb_math.sqrt",
+      title: themePrefix("fkb_math.sqrt"),
       perform: (e) => e.applySurround("$\\sqrt{", "}$", "x"),
     });
 
@@ -26,7 +27,7 @@ export default apiInitializer("1.8.0", (api) => {
       id: "fkb-math-power",
       group: "extras",
       icon: "superscript",
-      title: "theme_metadata.fkb_math.power",
+      title: themePrefix("fkb_math.power"),
       perform: (e) => e.applySurround("^{", "}", "2"),
     });
   });
